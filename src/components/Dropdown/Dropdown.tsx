@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import S from "./Dropdown.module.scss";
 import cx from "classnames";
 import { SymbolType } from "../../assets/data/symbols";
+import { useTranslation } from "react-i18next";
 
 
 interface DropdownProps {
@@ -11,6 +12,8 @@ interface DropdownProps {
 }
 
 export const Dropdown: React.FC<DropdownProps> = ({symbolsList, selectedItem, setSelectedItem}) => {
+    const { t } = useTranslation();
+
     const [isOpen, setOpen] = useState(false);
 
     const toggleDropdown = () => setOpen(!isOpen);
@@ -23,7 +26,7 @@ export const Dropdown: React.FC<DropdownProps> = ({symbolsList, selectedItem, se
     return (
         <div className={S.dropdown}>
             <div className={S.dropdown__header} onClick={toggleDropdown}>
-                {selectedItem ? symbolsList?.find(symbol => symbol == selectedItem) : "Select currency"}
+                {selectedItem ? symbolsList?.find(symbol => symbol == selectedItem) : t('dropdown')}
                 <i className={cx("fa fa-chevron-right icon", isOpen ? S.open : "")}></i>
             </div>
             <div className={cx(S.dropdown__body, isOpen ? S.open : "")}>

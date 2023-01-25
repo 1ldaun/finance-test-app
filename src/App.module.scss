@@ -1,0 +1,14 @@
+.changeLanguage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  width: 37px;
+  height: 37px;
+  border-radius: 50%;
+  background-color: #282c34;
+  color: #E5E8EC;
+  cursor: pointer;
+}

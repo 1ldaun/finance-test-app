@@ -3,37 +3,39 @@ import S from "./Converter.module.scss";
 import { Dropdown } from "../Dropdown/Dropdown";
 import { symbols, SymbolType } from "../../assets/data/symbols";
 import arrowSvg from "../../assets/img/arrow-right.svg";
-import { CurrencyListType } from "../../assets/data/currencyListMocks";
+import { CurrencyListType } from "../../interfaces/currency";
 
 export interface ConverterProps {
-    currencyList: CurrencyListType;
+    currencyList: CurrencyListType | undefined;
 }
 
-const Converter: React.FC<ConverterProps> = ({currencyList}) => {
+const Converter: React.FC<ConverterProps> = ({ currencyList }) => {
     const [value, setValue] = useState(0);
     const [selectedFromItem, setSelectedFromItem] = useState<SymbolType | null>(null);
     const [selectedToItem, setSelectedToItem] = useState<SymbolType | null>(null);
 
     const calculateResult = () => {
-        if (selectedFromItem && selectedToItem)
+        if (selectedFromItem && selectedToItem && currencyList)
             return value * currencyList[selectedToItem] / currencyList[selectedFromItem];
     };
 
-    const convertedResult = useMemo(() => calculateResult(), [selectedFromItem, selectedToItem, value])
+    const convertedResult = useMemo(() => calculateResult(), [selectedFromItem, selectedToItem, value, currencyList]);
 
-
-    return (
-        <div className={S.wrapper}>
-            <Dropdown symbolsList={Object.keys(symbols) as SymbolType[]} selectedItem={selectedFromItem}
-                      setSelectedItem={setSelectedFromItem} />
-            <input type="number" onChange={(e) => setValue(parseInt((e.target.value)))} value={value}
-                   className={S.numericInput} />
-            <img src={arrowSvg} alt="arrow" />
-            <Dropdown symbolsList={Object.keys(symbols) as SymbolType[]} selectedItem={selectedToItem}
-                      setSelectedItem={setSelectedToItem} />
-            <input disabled type="number" value={convertedResult} className={S.numericInput} />
-        </div>
-    );
+    if (!currencyList)
+        return <div>loading...</div>;
+    else
+        return (
+            <div className={S.wrapper}>
+                <Dropdown symbolsList={Object.keys(symbols) as SymbolType[]} selectedItem={selectedFromItem}
+                          setSelectedItem={setSelectedFromItem} />
+                <input type="number" onChange={(e) => setValue(parseInt((e.target.value)))} value={value}
+                       className={S.numericInput} />
+                <img src={arrowSvg} alt="arrow" />
+                <Dropdown symbolsList={Object.keys(symbols) as SymbolType[]} selectedItem={selectedToItem}
+                          setSelectedItem={setSelectedToItem} />
+                <input disabled type="number" value={convertedResult} className={S.numericInput} />
+            </div>
+        );
 };
 
 export default Converter;

@@ -1,19 +1,6 @@
-import { SymbolType } from "./symbols";
+import { CurrencyListI } from "../../interfaces/currency";
 
-export type CurrencyListType = {
-    -readonly [key in keyof typeof SymbolType]: number;
-}
-
-export interface CurrencyListI {
-    base: string;
-    date: string;
-    historical: boolean;
-    rates: CurrencyListType;
-    success: boolean;
-    timestamp: number;
-}
-
-export const currencyList: CurrencyListI = {
+export const currencyListMocks: CurrencyListI = {
     "base": "RUB",
     "date": "2023-01-24",
     "historical": true,
