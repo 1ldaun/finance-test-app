@@ -1,0 +1,8 @@
+.wrapper {
+  display: flex;
+  max-height: 52px;
+
+  &>*:not(:last-child) {
+    margin-right: 20px;
+  }
+}
